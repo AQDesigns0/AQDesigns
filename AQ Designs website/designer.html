@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Design Your Item | AQ Designs</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .design-section {
+      padding: 60px 20px;
+      background: var(--color-bg);
+      min-height: 80vh;
+      text-align: center;
+    }
+    .design-controls {
+      max-width: 600px;
+      margin: 0 auto 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .design-canvas-container {
+      position: relative;
+      margin: 0 auto;
+      width: 62.5vw;
+      max-width: 400px;
+      height: 78.125vw;
+      max-height: 500px;
+    }
+    #designCanvas {
+      border: 2px dashed var(--color-accent);
+      background-color: #222;
+      width: 60vw;
+      max-width: 400px;
+      height: 75vw;
+      max-height: 500px;
+      margin: 0 auto;
+      display: block;
+    }
+    .error-message {
+      display: none;
+      color: #ff5555;
+      text-align: center;
+      margin: 10px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1rem;
+    }
+    .design-text {
+      position: absolute;
+      cursor: move;
+      user-select: none;
+    }
+    .color-picker, .font-select, .font-size {
+      padding: 5px;
+      border-radius: 4px;
+      background: var(--color-btn-bg);
+      color: var(--color-text);
+      border: 1px solid #444;
+    }
+    .color-palette {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .color-btn {
+      width: 30px;
+      height: 30px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+    }
+    label[for="imageUpload"] {
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      padding: 10px 20px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      cursor: pointer;
+    }
+    label[for="imageUpload"]:hover {
+      background-color: var(--color-accent-hover);
+    }
+    /* Hero Banner Styles */
+    .hero-banner {
+      background: linear-gradient(135deg, #1a1a1a, #000000);
+      padding: 80px 20px;
+      color: var(--color-text);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(37, 211, 102, 0.1) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .hero-banner h1 {
+      font-size: 3.5rem;
+      text-shadow: 0 0 10px var(--color-accent), 0 0 20px rgba(37, 211, 102, 0.5);
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-banner p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #ccc;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-banner .btn {
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      padding: 14px 36px;
+      font-weight: 700;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 0 15px var(--color-accent);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-banner .btn:hover {
+      background-color: var(--color-accent-hover);
+    }
+    /* Header Enhancements */
+    .sticky-header {
+      background: linear-gradient(90deg, #1a1a1a, #111);
+      padding: 15px 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    }
+    .sticky-header .logo img {
+      height: 60px;
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky-header">
+    <div class="logo">
+      <img src="aq-designs-logo.jpg" alt="AQ Designs Logo" onerror="this.src='https://via.placeholder.com/40x40'; this.alt='Placeholder Logo';" />
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="lookbook.html">Lookbook</a>
+      <a href="designer.html" class="active">Design Yours</a>
+      <a href="https://wa.me/27825809000" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+    </nav>
+  </header>
+
+  <section class="hero-banner">
+    <h1>Design Your Dream Jacket</h1>
+    <p>Create a custom matric jacket that’s uniquely yours.</p>
+    <a href="#design-section" class="btn">Start Designing</a>
+  </section>
+
+  <section class="design-section" id="design-section">
+    <h1 class="section-title">Customize Your Design</h1>
+    <div class="design-controls">
+      <label for="itemSelect">Item:</label>
+      <select id="itemSelect">
+        <option value="jacket">Jacket</option>
+        <option value="hoodie">Hoodie</option>
+        <option value="tshirt">T-Shirt</option>
+      </select>
+      <label for="imageUpload">Upload Image:</label>
+      <input type="file" id="imageUpload" accept="image/*" style="display:none;" />
+      <label for="imageUpload" class="btn">Change Background</label>
+      <label for="addTextInput">Add Text:</label>
+      <input type="text" id="addTextInput" placeholder="Enter text..." />
+      <button id="addTextBtn">Add Text</button>
+      <label for="colorPicker">Color:</label>
+      <input type="color" id="colorPicker" value="#ffffff" class="color-picker" />
+      <div class="color-palette">
+        <button class="color-btn" style="background-color: #ffffff;" onclick="setColor('#ffffff')"></button>
+        <button class="color-btn" style="background-color: #000000;" onclick="setColor('#000000')"></button>
+        <button class="color-btn" style="background-color: #ff0000;" onclick="setColor('#ff0000')"></button>
+        <button class="color-btn" style="background-color: #00ff00;" onclick="setColor('#00ff00')"></button>
+        <button class="color-btn" style="background-color: #0000ff;" onclick="setColor('#0000ff')"></button>
+      </div>
+      <label for="fontSelect">Font:</label>
+      <select id="fontSelect" class="font-select">
+        <option value="Arial">Arial</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+      <label for="fontSize">Size:</label>
+      <input type="number" id="fontSize" min="10" max="50" value="20" class="font-size" />
+      <button id="clearCanvasBtn">Clear Canvas</button>
+      <button id="saveDesign">Save Design</button>
+      <button id="removeSelectedBtn">Remove Selected</button>
+    </div>
+    <div class="design-canvas-container" id="designCanvasContainer">
+      <canvas id="designCanvas"></canvas>
+    </div>
+    <div id="errorMessage" class="error-message"></div>
+  </section>
+
+  <footer>
+    <p>© 2025 AQ Designs | Bring virtual designs into reality</p>
+    <p>Follow us: @a.q_designs_</p>
+  </footer>
+
+  <a href="https://wa.me/27825809000" target="_blank" class="whatsapp-btn" aria-label="Chat with AQ Designs on WhatsApp" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#25d366" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48A11.76 11.76 0 0012 0C5.373 0 0 5.373 0 12a11.94 11.94 0 001.659 6.041L0 24l5.998-1.557A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.205-1.254-6.213-3.48-8.52zM12 21.5a9.487 9.487 0 01-4.845-1.384l-.35-.207-3.563.925.952-3.476-.226-.357A9.49 9.49 0 012.5 12c0-5.246 4.254-9.5 9.5-9.5 2.535 0 4.917.99 6.708 2.78A9.44 9.44 0 0121.5 12c0 5.246-4.254 9.5-9.5 9.5zm5.176-7.227c-.295-.148-1.744-.86-2.017-.958-.273-.099-.472-.148-.67.15-.196.295-.758.958-.93 1.155-.17.196-.346.222-.64.074-.295-.148-1.244-.46-2.37-1.457-.875-.78-1.465-1.742-1.637-2.037-.17-.295-.018-.454.13-.602.134-.134.295-.346.44-.52.148-.173.197-.295.295-.492.099-.196.05-.37-.025-.52-.075-.148-.67-1.615-.916-2.21-.242-.58-.487-.503-.67-.512l-.57-.01c-.196 0-.512.074-.78.37-.273.295-1.04 1.017-1.04 2.48 0 1.462 1.065 2.875 1.213 3.074.148.196 2.09 3.19 5.07 4.47.708.306 1.26.488 1.69.625.71.227 1.357.195 1.87.118.57-.086 1.744-.71 1.993-1.397.247-.685.247-1.27.173-1.397-.074-.124-.273-.197-.57-.345z"/>
+    </svg>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AQ Designs | Shop</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="sticky-header">
+    <div class="logo">
+      <img src="aq-designs-logo.jpg" alt="AQ Designs Logo" onerror="this.src='https://via.placeholder.com/40x40'; this.alt='Placeholder Logo';" />
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html" class="active">Shop</a>
+      <a href="lookbook.html">Lookbook</a>
+      <a href="designer.html">Design Yours</a>
+      <a href="https://wa.me/27825809000" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+    </nav>
+  </header>
+
+  <section class="vibe-tiles" style="padding: 60px 20px; background: #111; min-height: 80vh;">
+    <h1 class="section-title">Shop Our Collection</h1>
+
+    <div class="category-bar" id="categoryBar">
+      <button class="category-btn active" onclick="filterAndScroll(event, 'all')">All</button>
+      <button class="category-btn" onclick="filterAndScroll(event, 'street-style', 'car-vibe')">Street Style</button>
+      <button class="category-btn" onclick="filterAndScroll(event, 'school-heat', 'matric-jackets')">School Heat</button>
+      <button class="category-btn" onclick="filterAndScroll(event, 'sport-mode', 'sport-fit')">Sport Mode</button>
+      <button class="category-btn" onclick="filterAndScroll(event, 'limited-drops', 'limited-drop')">Limited Drops</button>
+    </div>
+
+    <div class="sort-dropdown">
+      <select id="sortSelect" onchange="sortTiles(this.value)">
+        <option value="default">Sort by: Default</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="newest">Newest</option>
+        <option value="popularity">Popularity</option>
+      </select>
+    </div>
+
+    <div class="shop-cards" id="productTiles">
+      <div class="shop-card" id="car-vibe" data-category="street-style" data-price="1200" data-newest="20250401" data-popularity="7">
+        <img src="matric-jacket3.jpg" alt="Car Vibe" class="product-image" onerror="this.src='https://via.placeholder.com/400x400'; this.alt='Placeholder Image';" />
+        <h3>Matrics of 25'</h3>
+        <p>All custom made jackets, we design and create your dream</p>
+        <p class="price">Class of 26' all orders will receive a free gift</p>
+        <a href="https://wa.me/27825809000?text=I'm%20interested%20in%20the%20Car%20Vibe%20jacket" target="_blank" class="btn">Order Now</a>
+      </div>
+
+      <div class="shop-card" id="matric-jackets" data-category="school-heat" data-price="1400" data-newest="20250315" data-popularity="10">
+        <img src="matric-jacket.jpg" alt="Matric Jacket" class="product-image" onerror="this.src='https://via.placeholder.com/400x400'; this.alt='Placeholder Image';" />
+        <h3>Matric Jackets</h3>
+        <p>Custom designs made for the Class of 2026. Order early and get a free gift!</p>
+        <p class="price">Starting from R750 moving up depending on design.</p>
+        <a href="https://wa.me/27825809000?text=I'm%20interested%20in%20the%20Matric%20Jacket" target="_blank" class="btn">Order Now</a>
+      </div>
+
+      <div class="shop-card" id="sport-fit" data-category="sport-mode" data-price="1250" data-newest="20250510" data-popularity="5">
+        <img src="coming-soon.jpg" alt="Sport Fit" class="product-image" onerror="this.src='https://via.placeholder.com/400x400'; this.alt='Placeholder Image';" />
+        <h3>Sport Fit</h3>
+        <p>Coming Soon</p>
+        <p class="price"></p>
+        <a href="https://wa.me/27825809000?text=I'm%20interested%20in%20the%20Sport%20Fit%20jacket" target="_blank" class="btn">Order Now</a>
+      </div>
+
+      <div class="shop-card" id="limited-drop" data-category="limited-drops" data-price="1500" data-newest="20250220" data-popularity="3">
+        <img src="limited-drop.jpg" alt="Limited Drop" class="product-image" onerror="this.src='https://via.placeholder.com/400x400'; this.alt='Placeholder Image';" />
+        <h3>Limited Drop</h3>
+        <p>Exclusive limited edition jackets, grab yours before they're gone.</p>
+        <p class="price">R550</p>
+        <a href="https://wa.me/27825809000?text=I'm%20interested%20in%20the%20Limited%20Drop%20jacket" target="_blank" class="btn">Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 AQ Designs | Bring virtual designs into reality</p>
+    <p>Follow us: @a.q_designs_</p>
+  </footer>
+
+  <script>
+    function filterAndScroll(event, category, scrollId) {
+      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      const tiles = document.querySelectorAll('.shop-card');
+      tiles.forEach(tile => {
+        const matches = category === 'all' || tile.dataset.category === category;
+        tile.style.display = matches ? 'flex' : 'none';
+        tile.style.opacity = matches ? '1' : '0';
+        tile.style.transform = matches ? 'scale(1)' : 'scale(0.9)';
+        tile.style.transition = 'all 0.3s ease';
+      });
+
+      if (scrollId) {
+        const el = document.getElementById(scrollId);
+        if (el) {
+          setTimeout(() => {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 350);
+        }
+      }
+    }
+
+    function sortTiles(criteria) {
+      const container = document.getElementById('productTiles');
+      const tilesArray = Array.from(container.querySelectorAll('.shop-card'));
+
+      tilesArray.sort((a, b) => {
+        if (criteria === 'price-asc') return Number(a.dataset.price) - Number(b.dataset.price);
+        if (criteria === 'price-desc') return Number(b.dataset.price) - Number(a.dataset.price);
+        if (criteria === 'newest') return Number(b.dataset.newest) - Number(a.dataset.newest);
+        if (criteria === 'popularity') return Number(b.dataset.popularity) - Number(a.dataset.popularity);
+        return 0;
+      });
+
+      tilesArray.forEach(tile => container.appendChild(tile));
+    }
+  </script>
+</body>
+</html>
