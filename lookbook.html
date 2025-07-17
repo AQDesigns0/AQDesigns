@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AQ Designs | Lookbook</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .lookbook {
+      padding: 60px 20px;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      text-align: center;
+      min-height: 80vh;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+      color: var(--color-accent);
+      text-shadow: 0 0 8px var(--color-accent);
+    }
+
+    .lookbook p {
+      font-weight: 600;
+      margin-bottom: 40px;
+      color: var(--color-accent-hover);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .img {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #222;
+    }
+
+    .img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+      border-radius: 12px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+    }
+
+    .img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px var(--color-accent);
+    }
+
+    .img:hover img {
+      transform: scale(1.1);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.85);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      z-index: 5000;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 0 30px var(--color-accent);
+      overflow: hidden;
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: var(--color-accent);
+      color: var(--color-bg);
+      border: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--color-accent);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      background-color: var(--color-accent-hover);
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky-header">
+    <div class="logo">
+      <img src="aq-designs-logo.jpg" alt="AQ Designs Logo" />
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="lookbook.html" class="active">Lookbook</a>
+      <a href="designer.html">Design Yours</a>
+      <a href="https://wa.me/27825809000" target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+    </nav>
+  </header>
+
+  <section class="lookbook">
+    <h1 class="section-title">Lookbook</h1>
+    <p>A collection of past designs, custom pieces, and our favorite shots.</p>
+
+    <div class="gallery">
+      <div class="img" tabindex="0"><img src="cis.jpg" alt="Look 1" /></div>
+      <div class="img" tabindex="0"><img src="agc.jpg" alt="Look 2" /></div>
+      <div class="img" tabindex="0"><img src="cadmus.jpg" alt="Look 3" /></div>
+      <div class="img" tabindex="0"><img src="cover.jpg" alt="Look 4" /></div>
+      <div class="img" tabindex="0"><img src="hoodies.jpg" alt="Look 5" /></div>
+      <div class="img" tabindex="0"><img src="k-carrim.jpg" alt="Look 6" /></div>
+      <div class="img" tabindex="0"><img src="keine.jpg" alt="Look 7" /></div>
+      <div class="img" tabindex="0"><img src="looney-tunes.jpg" alt="Look 8" /></div>
+      <div class="img" tabindex="0"><img src="lss.jpg" alt="Look 9" /></div>
+      <div class="img" tabindex="0"><img src="pmt.jpg" alt="Look 10" /></div>
+      <div class="img" tabindex="0"><img src="qurtuba.jpg" alt="Look 11" /></div>
+      <div class="img" tabindex="0"><img src="tba.jpg" alt="Look 12" /></div>
+      <div class="img" tabindex="0"><img src="tshirt.jpg" alt="Look 13" /></div>
+      <div class="img" tabindex="0"><img src="tms.jpg" alt="Look 14" /></div>
+    </div>
+  </section>
+
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Image preview">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose" aria-label="Close preview">×</button>
+      <img src="" alt="Expanded Lookbook Image" id="modalImage" />
+    </div>
+  </div>
+
+  <a href="https://wa.me/27825809000" target="_blank" class="whatsapp-btn" aria-label="Chat with AQ Designs on WhatsApp" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#25D366" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M20.52 3.48A11.76 11.76 0 0012 0C5.373 0 0 5.373 0 12a11.94 11.94 0 001.659 6.041L0 24l5.998-1.557A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.205-1.254-6.213-3.48-8.52zM12 21.5a9.487 9.487 0 01-4.845-1.384l-.35-.207-3.563.925.952-3.476-.226-.357A9.49 9.49 0 012.5 12c0-5.246 4.254-9.5 9.5-9.5 2.535 0 4.917.99 6.708 2.78A9.44 9.44 0 0121.5 12c0 5.246-4.254 9.5-9.5 9.5zm5.176-7.227c-.295-.148-1.744-.86-2.017-.958-.273-.099-.472-.148-.67.15-.196.295-.758.958-.93 1.155-.17.196-.346.222-.64.074-.295-.148-1.244-.46-2.37-1.457-.875-.78-1.465-1.742-1.637-2.037-.17-.295-.018-.454.13-.602.134-.134.295-.346.44-.52.148-.173.197-.295.295-.492.099-.196.05-.37-.025-.52-.075-.148-.67-1.615-.916-2.21-.242-.58-.487-.503-.67-.512l-.57-.01c-.196 0-.512.074-.78.37-.273.295-1.04 1.017-1.04 2.48 0 1.462 1.065 2.875 1.213 3.074.148.196 2.09 3.19 5.07 4.47.708.306 1.26.488 1.69.625.71.227 1.357.195 1.87.118.57-.086 1.744-.71 1.993-1.397.247-.685.247-1.27.173-1.397-.074-.124-.273-.197-.57-.345z"/>
+    </svg>
+  </a>
+
+  <footer>
+    <p>© 2025 AQ Designs | Bring virtual designs into reality</p>
+    <p>Follow us: @a.q_designs_</p>
+  </footer>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    const images = document.querySelectorAll('.gallery .img img');
+
+    images.forEach(img => {
+      img.parentElement.addEventListener('click', () => {
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+      });
+      img.parentElement.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          modalImage.src = img.src;
+          modalImage.alt = img.alt;
+          modal.classList.add('active');
+          modal.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    modalClose.addEventListener('click', () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      modalImage.src = '';
+      modalImage.alt = '';
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        modalImage.src = '';
+        modalImage.alt = '';
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        modalImage.src = '';
+        modalImage.alt = '';
+      }
+    });
+  </script>
+</body>
+</html>
